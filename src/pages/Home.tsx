@@ -109,39 +109,63 @@ const Home = () => {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${heroImage})` }}
-        >
-          <div className="absolute inset-0 bg-black/40" />
-        </div>
+      <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-pink-100 via-purple-50 to-blue-100">
+        <div className="absolute inset-0 bg-gradient-to-r from-yellow-200/20 via-pink-200/20 to-blue-200/20" />
         
         <motion.div 
-          className="relative z-10 text-center text-white max-w-4xl mx-auto px-4"
+          className="relative z-10 text-center max-w-6xl mx-auto px-4 py-20"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-            Create <span className="text-gradient bg-gradient-to-r from-primary-light to-accent bg-clip-text text-transparent">Unforgettable</span> Moments
+          <div className="mb-8">
+            <Badge className="mb-4 bg-gradient-to-r from-pink-500 to-purple-600 text-white px-6 py-2 text-lg font-bold animate-pulse">
+              🎉 GRAB IT TODAY 🎉
+            </Badge>
+          </div>
+          
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+            <span className="bg-gradient-to-r from-pink-600 via-purple-600 to-blue-600 bg-clip-text text-transparent">
+              FREE CELEBRATION PACKAGE
+            </span>
           </h1>
-          <p className="text-xl md:text-2xl mb-8 text-gray-200 max-w-2xl mx-auto">
-            From intimate celebrations to grand events, we craft experiences that leave lasting memories.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="xl" variant="hero" asChild>
-              <Link to="/experiences">
-                Explore Events <ArrowRight className="ml-2 w-5 h-5" />
+          
+          <h2 className="text-2xl md:text-4xl font-bold text-gray-800 mb-6">
+            WITH YOUR FAVORITE DECORATION!
+          </h2>
+          
+          <div className="mb-8">
+            <Button size="xl" className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white font-bold px-8 py-4 text-lg rounded-full shadow-lg hover:shadow-xl transition-all">
+              LIMITED TIME OFFER*
+            </Button>
+          </div>
+          
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
+            <Button size="lg" variant="hero" asChild>
+              <Link to="/decorations">
+                Explore Decorations <ArrowRight className="ml-2 w-5 h-5" />
               </Link>
             </Button>
-            <Button size="xl" variant="neon" asChild>
+            <Button size="lg" variant="neon" asChild>
               <Link to="/contact">
                 Plan Custom Event
               </Link>
             </Button>
           </div>
         </motion.div>
+        
+        {/* Decorative Elements */}
+        <div className="absolute top-10 left-10 w-20 h-20 bg-yellow-300 rounded-full opacity-60 animate-bounce" />
+        <div className="absolute top-20 right-20 w-16 h-16 bg-pink-400 rounded-full opacity-60 animate-bounce delay-1000" />
+        <div className="absolute bottom-20 left-20 w-24 h-24 bg-blue-400 rounded-full opacity-60 animate-bounce delay-2000" />
+        <div className="absolute bottom-10 right-10 w-18 h-18 bg-purple-400 rounded-full opacity-60 animate-bounce delay-500" />
+      </section>
+      
+      {/* Tagline Section */}
+      <section className="py-12 bg-gradient-to-r from-purple-600 to-pink-600 text-white text-center">
+        <h2 className="text-3xl md:text-5xl font-bold">
+          Make Every Occasion Extra Special
+        </h2>
       </section>
 
       {/* Trending Categories */}

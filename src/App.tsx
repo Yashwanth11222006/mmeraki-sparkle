@@ -42,10 +42,28 @@ const App = () => (
             <Routes>
               {/* Customer Routes */}
               <Route path="/" element={<Home />} />
-              <Route path="/experiences" element={<Experiences />} />
-              <Route path="/decorations" element={<Decorations />} />
+              
+              {/* Main Categories */}
+              <Route path="/anniversary" element={<Experiences />} />
+              <Route path="/birthdays" element={<Experiences />} />
               <Route path="/gifts" element={<Gifts />} />
+              <Route path="/candlelight" element={<Experiences />} />
+              <Route path="/decorations" element={<Decorations />} />
+              <Route path="/festivals" element={<Experiences />} />
+              <Route path="/kids" element={<Experiences />} />
               <Route path="/corporate" element={<Corporate />} />
+              
+              {/* Legacy routes */}
+              <Route path="/experiences" element={<Experiences />} />
+              
+              {/* Subcategory routes */}
+              <Route path="/decorations/:type" element={<Decorations />} />
+              <Route path="/gifts/:type" element={<Gifts />} />
+              <Route path="/kids/:type" element={<Experiences />} />
+              <Route path="/baby-shower" element={<Experiences />} />
+              <Route path="/baby-welcome" element={<Experiences />} />
+              <Route path="/activities" element={<Experiences />} />
+              
               <Route path="/event/:id" element={<EventDetail />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/checkout" element={<Checkout />} />

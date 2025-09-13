@@ -22,11 +22,60 @@ const Navbar = () => {
 
   const cartItemCount = items.reduce((sum, item) => sum + item.quantity, 0);
 
-  const categories = [
-    { name: 'Experiences', path: '/experiences' },
-    { name: 'Decorations', path: '/decorations' },
-    { name: 'Gifts', path: '/gifts' },
-    { name: 'Corporate Events', path: '/corporate' },
+  const mainCategories = [
+    { 
+      name: 'Anniversary', 
+      path: '/anniversary',
+      subcategories: ['Romantic Dinners', 'Surprise Setups', 'Decorations', 'Gifts']
+    },
+    { 
+      name: 'Birthdays', 
+      path: '/birthdays',
+      subcategories: ['Kids Birthday', 'Adult Birthday', 'Surprise Parties', 'Decorations']
+    },
+    { 
+      name: 'Gifts', 
+      path: '/gifts',
+      subcategories: ['Personalised Gifts', 'Flowers', 'Cakes', 'Hampers']
+    },
+    { 
+      name: 'Candlelight Dinners', 
+      path: '/candlelight',
+      subcategories: ['Rooftop Dinners', 'Home Setups', 'Restaurant Bookings']
+    },
+    { 
+      name: 'Decorations', 
+      path: '/decorations',
+      subcategories: ['Birthday Decor', 'Anniversary Decor', 'Festival Decor']
+    },
+    { 
+      name: 'Festivals', 
+      path: '/festivals',
+      subcategories: ['Diwali', 'Christmas', 'New Year', 'Holi']
+    },
+    { 
+      name: "Kid's Celebrations", 
+      path: '/kids',
+      subcategories: ['Birthday Parties', 'Games & Activities', 'Themed Decor']
+    },
+    { 
+      name: 'Corporate Events', 
+      path: '/corporate',
+      subcategories: ['Team Building', 'Office Parties', 'Product Launches']
+    }
+  ];
+
+  const quickCategories = [
+    { name: 'Birthday Decorations', icon: '🎈', path: '/decorations?type=birthday' },
+    { name: 'Same Day Decorations', icon: '⚡', path: '/decorations?delivery=same-day' },
+    { name: 'Kids Birthday Decors', icon: '🎪', path: '/kids/birthday' },
+    { name: 'Corporate Events', icon: '💼', path: '/corporate' },
+    { name: 'Personalised Gifts', icon: '🎁', path: '/gifts/personalised' },
+    { name: 'Candlelight Dinner', icon: '🕯️', path: '/candlelight' },
+    { name: 'Baby Shower', icon: '👶', path: '/baby-shower' },
+    { name: 'Baby Welcome', icon: '🍼', path: '/baby-welcome' },
+    { name: 'Festive Celebrations', icon: '🎊', path: '/festivals' },
+    { name: 'Games & Activities', icon: '🎮', path: '/activities' }
   ];
 
   const quickLinks = [
@@ -67,37 +116,34 @@ const Navbar = () => {
           </form>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-6">
-            <Link to="/" className="text-foreground hover:text-primary transition-colors">
+          <nav className="hidden lg:flex items-center space-x-1">
+            <Link to="/" className="px-3 py-2 text-foreground hover:text-primary transition-colors">
               Home
             </Link>
             
-            {categories.map((category) => (
-              <Link
-                key={category.name}
-                to={category.path}
-                className="text-foreground hover:text-primary transition-colors"
-              >
-                {category.name}
-              </Link>
-            ))}
-
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="text-foreground hover:text-primary">
-                  All Categories <ChevronDown className="ml-1 w-4 h-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-48 bg-white border border-border shadow-medium">
-                {categories.map((category) => (
-                  <DropdownMenuItem key={category.name} asChild>
-                    <Link to={category.path} className="w-full">
-                      {category.name}
+            {mainCategories.map((category) => (
+              <DropdownMenu key={category.name}>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="text-foreground hover:text-primary px-3 py-2">
+                    {category.name} <ChevronDown className="ml-1 w-3 h-3" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56 bg-white border border-border shadow-lg z-50">
+                  <DropdownMenuItem asChild>
+                    <Link to={category.path} className="w-full font-medium">
+                      View All {category.name}
                     </Link>
                   </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
+                  {category.subcategories.map((sub) => (
+                    <DropdownMenuItem key={sub} asChild>
+                      <Link to={`${category.path}/${sub.toLowerCase().replace(/\s+/g, '-')}`} className="w-full">
+                        {sub}
+                      </Link>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ))}
           </nav>
 
           {/* Right Side Icons */}
@@ -192,7 +238,7 @@ const Navbar = () => {
               >
                 Home
               </Link>
-              {categories.map((category) => (
+              {mainCategories.map((category) => (
                 <Link
                   key={category.name}
                   to={category.path}
@@ -207,17 +253,22 @@ const Navbar = () => {
         )}
       </div>
 
-      {/* Sub Navigation */}
-      <div className="bg-secondary/50 border-t border-border">
+      {/* Quick Categories Section */}
+      <div className="bg-secondary/30 border-t border-border py-4">
         <div className="container mx-auto px-4">
-          <div className="flex items-center justify-center space-x-6 py-2 overflow-x-auto">
-            {quickLinks.map((link) => (
+          <div className="grid grid-cols-5 md:grid-cols-10 gap-4 max-w-6xl mx-auto">
+            {quickCategories.map((category) => (
               <Link
-                key={link}
-                to={`/search?category=${link.toLowerCase().replace(' ', '-')}`}
-                className="text-sm text-muted-foreground hover:text-primary transition-colors whitespace-nowrap"
+                key={category.name}
+                to={category.path}
+                className="flex flex-col items-center p-3 rounded-lg hover:bg-white/50 transition-colors group"
               >
-                {link}
+                <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-2 shadow-sm group-hover:shadow-md transition-shadow">
+                  <span className="text-xl">{category.icon}</span>
+                </div>
+                <span className="text-xs text-center font-medium text-foreground leading-tight">
+                  {category.name}
+                </span>
               </Link>
             ))}
           </div>

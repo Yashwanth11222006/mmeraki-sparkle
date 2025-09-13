@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, Heart, ShoppingCart, User, Menu, X, ChevronDown } from 'lucide-react';
+import { Search, Heart, ShoppingCart, User, Menu, X, ChevronDown, HelpCircle, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -22,47 +22,15 @@ const Navbar = () => {
 
   const cartItemCount = items.reduce((sum, item) => sum + item.quantity, 0);
 
-  const mainCategories = [
-    { 
-      name: 'Anniversary', 
-      path: '/anniversary',
-      subcategories: ['Romantic Dinners', 'Surprise Setups', 'Decorations', 'Gifts']
-    },
-    { 
-      name: 'Birthdays', 
-      path: '/birthdays',
-      subcategories: ['Kids Birthday', 'Adult Birthday', 'Surprise Parties', 'Decorations']
-    },
-    { 
-      name: 'Gifts', 
-      path: '/gifts',
-      subcategories: ['Personalised Gifts', 'Flowers', 'Cakes', 'Hampers']
-    },
-    { 
-      name: 'Candlelight Dinners', 
-      path: '/candlelight',
-      subcategories: ['Rooftop Dinners', 'Home Setups', 'Restaurant Bookings']
-    },
-    { 
-      name: 'Decorations', 
-      path: '/decorations',
-      subcategories: ['Birthday Decor', 'Anniversary Decor', 'Festival Decor']
-    },
-    { 
-      name: 'Festivals', 
-      path: '/festivals',
-      subcategories: ['Diwali', 'Christmas', 'New Year', 'Holi']
-    },
-    { 
-      name: "Kid's Celebrations", 
-      path: '/kids',
-      subcategories: ['Birthday Parties', 'Games & Activities', 'Themed Decor']
-    },
-    { 
-      name: 'Corporate Events', 
-      path: '/corporate',
-      subcategories: ['Team Building', 'Office Parties', 'Product Launches']
-    }
+  const occasionCategories = [
+    { name: 'Anniversary', path: '/anniversary' },
+    { name: 'Birthdays', path: '/birthdays' },
+    { name: 'Gifts', path: '/gifts' },
+    { name: 'Candlelight Dinners', path: '/candlelight' },
+    { name: 'Decorations', path: '/decorations' },
+    { name: 'Festivals', path: '/festivals' },
+    { name: "Kid's Celebrations", path: '/kids' },
+    { name: 'Corporate Events', path: '/corporate' }
   ];
 
   const quickCategories = [
@@ -107,70 +75,29 @@ const Navbar = () => {
             <div className="relative w-full">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
               <Input
-                placeholder="Search events, categories..."
+                placeholder="What are you celebrating?"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 bg-muted/50 border-0 focus:bg-white transition-colors"
+                className="pl-10 bg-muted/50 border-0 focus:bg-white transition-colors rounded-full"
               />
             </div>
           </form>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-1">
-            <Link to="/" className="px-3 py-2 text-foreground hover:text-primary transition-colors">
-              Home
-            </Link>
-            
-            {mainCategories.map((category) => (
-              <DropdownMenu key={category.name}>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="text-foreground hover:text-primary px-3 py-2">
-                    {category.name} <ChevronDown className="ml-1 w-3 h-3" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-56 bg-white border border-border shadow-lg z-50">
-                  <DropdownMenuItem asChild>
-                    <Link to={category.path} className="w-full font-medium">
-                      View All {category.name}
-                    </Link>
-                  </DropdownMenuItem>
-                  {category.subcategories.map((sub) => (
-                    <DropdownMenuItem key={sub} asChild>
-                      <Link to={`${category.path}/${sub.toLowerCase().replace(/\s+/g, '-')}`} className="w-full">
-                        {sub}
-                      </Link>
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
-            ))}
-          </nav>
-
           {/* Right Side Icons */}
-          <div className="flex items-center space-x-4">
-            {/* Wishlist */}
-            <Button variant="ghost" size="icon" className="relative">
-              <Heart className="w-5 h-5" />
+          <div className="flex items-center space-x-6">
+            {/* Help Center */}
+            <Button variant="ghost" className="hidden md:flex items-center space-x-1 text-sm text-muted-foreground hover:text-primary">
+              <HelpCircle className="w-4 h-4" />
+              <span>HELP CENTER</span>
             </Button>
 
-            {/* Cart */}
-            <Link to="/cart">
-              <Button variant="ghost" size="icon" className="relative">
-                <ShoppingCart className="w-5 h-5" />
-                {cartItemCount > 0 && (
-                  <Badge className="absolute -top-2 -right-2 w-5 h-5 p-0 flex items-center justify-center text-xs bg-primary">
-                    {cartItemCount}
-                  </Badge>
-                )}
-              </Button>
-            </Link>
-
-            {/* Profile */}
+            {/* Login */}
             {isAuthenticated ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon">
-                    <User className="w-5 h-5" />
+                  <Button variant="ghost" className="flex items-center space-x-1 text-sm text-muted-foreground hover:text-primary">
+                    <User className="w-4 h-4" />
+                    <span>LOG IN</span>
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-48 bg-white border border-border shadow-medium" align="end">
@@ -195,11 +122,30 @@ const Navbar = () => {
               </DropdownMenu>
             ) : (
               <Link to="/profile">
-                <Button variant="ghost" size="icon">
-                  <User className="w-5 h-5" />
+                <Button variant="ghost" className="flex items-center space-x-1 text-sm text-muted-foreground hover:text-primary">
+                  <User className="w-4 h-4" />
+                  <span>LOG IN</span>
                 </Button>
               </Link>
             )}
+
+            {/* Location */}
+            <Button variant="ghost" className="hidden md:flex items-center space-x-1 text-sm text-primary">
+              <MapPin className="w-4 h-4" />
+              <span>DELHI NCR</span>
+            </Button>
+
+            {/* Cart */}
+            <Link to="/cart">
+              <Button variant="ghost" size="icon" className="relative">
+                <ShoppingCart className="w-5 h-5" />
+                {cartItemCount > 0 && (
+                  <Badge className="absolute -top-2 -right-2 w-5 h-5 p-0 flex items-center justify-center text-xs bg-primary">
+                    {cartItemCount}
+                  </Badge>
+                )}
+              </Button>
+            </Link>
 
             {/* Mobile Menu Toggle */}
             <Button
@@ -221,7 +167,7 @@ const Navbar = () => {
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
                 <Input
-                  placeholder="Search events, categories..."
+                  placeholder="What are you celebrating?"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="pl-10"
@@ -231,14 +177,7 @@ const Navbar = () => {
 
             {/* Mobile Navigation */}
             <nav className="space-y-2">
-              <Link
-                to="/"
-                className="block py-2 text-foreground hover:text-primary transition-colors"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Home
-              </Link>
-              {mainCategories.map((category) => (
+              {occasionCategories.map((category) => (
                 <Link
                   key={category.name}
                   to={category.path}
@@ -253,8 +192,31 @@ const Navbar = () => {
         )}
       </div>
 
-      {/* Quick Categories Section */}
-      <div className="bg-secondary/30 border-t border-border py-4">
+      {/* First Sub Navigation - Occasions */}
+      <div className="bg-white border-b border-border">
+        <div className="container mx-auto px-4">
+          <nav className="flex items-center justify-center space-x-8 py-3 text-sm">
+            {occasionCategories.map((category, index) => (
+              <React.Fragment key={category.name}>
+                <Link
+                  to={category.path}
+                  className={`hover:text-primary transition-colors ${
+                    index === occasionCategories.length - 1 ? 'text-primary font-medium' : 'text-foreground'
+                  }`}
+                >
+                  {category.name}
+                </Link>
+                {index < occasionCategories.length - 1 && (
+                  <ChevronDown className="w-3 h-3 text-muted-foreground" />
+                )}
+              </React.Fragment>
+            ))}
+          </nav>
+        </div>
+      </div>
+
+      {/* Second Sub Navigation - Event Categories */}
+      <div className="bg-muted/30 border-b border-border py-4">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-5 md:grid-cols-10 gap-4 max-w-6xl mx-auto">
             {quickCategories.map((category) => (
@@ -263,7 +225,7 @@ const Navbar = () => {
                 to={category.path}
                 className="flex flex-col items-center p-3 rounded-lg hover:bg-white/50 transition-colors group"
               >
-                <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-2 shadow-sm group-hover:shadow-md transition-shadow">
+                <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center mb-2 shadow-sm group-hover:shadow-md transition-shadow border border-border/20">
                   <span className="text-xl">{category.icon}</span>
                 </div>
                 <span className="text-xs text-center font-medium text-foreground leading-tight">

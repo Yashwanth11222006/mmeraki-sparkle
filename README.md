@@ -1,73 +1,141 @@
-# Welcome to your Lovable project
+# MMeraki Event Planning Platform
 
-## Project info
+A comprehensive event planning platform built with React, TypeScript, and modern web technologies. This is a **frontend-only** application that works with mock data.
 
-**URL**: https://lovable.dev/projects/d14eb0d9-cb74-471f-953f-22e49687a0ad
+## ✨ Features
 
-## How can I edit this code?
+- **Event Management**: Browse and manage various types of events
+- **User Authentication**: Mock authentication system with localStorage persistence
+- **Admin Dashboard**: Complete admin panel for managing events and users
+- **Shopping Cart**: Full cart functionality with persistence
+- **Responsive Design**: Mobile-first responsive design
+- **Modern UI**: Built with shadcn/ui components and Tailwind CSS
+- **Mock Data**: Complete functionality without backend dependencies
 
-There are several ways of editing your application.
+## 🚀 Quick Start
 
-**Use Lovable**
+### Prerequisites
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/d14eb0d9-cb74-471f-953f-22e49687a0ad) and start prompting.
+- Node.js (v18 or higher)
+- npm or yarn
 
-Changes made via Lovable will be committed automatically to this repo.
+### Installation
 
-**Use your preferred IDE**
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+4. Open [http://localhost:5173](http://localhost:5173) in your browser
 
-Follow these steps:
+## 🔑 Demo Credentials
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+- **Regular User**: 
+  - Email: `john@example.com`
+  - Password: `password` (or any 3+ characters)
+- **Admin User**: 
+  - Email: `admin@example.com`
+  - Password: `admin` (or any 3+ characters)
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## 🛠️ Tech Stack
 
-# Step 3: Install the necessary dependencies.
-npm i
+- **Frontend**: React 18, TypeScript, Vite
+- **Styling**: Tailwind CSS, shadcn/ui
+- **State Management**: React Context API
+- **Routing**: React Router DOM
+- **Animations**: Framer Motion
+- **Icons**: Lucide React
+- **Data**: Mock data with localStorage persistence
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+## 📁 Project Structure
+
+```
+src/
+├── components/     # Reusable UI components
+├── pages/         # Page components
+├── context/       # React Context providers (Auth, Cart)
+├── data/          # Mock data and constants
+├── hooks/         # Custom React hooks
+├── lib/           # Utility functions
+├── admin/         # Admin dashboard components
+└── assets/        # Images and static assets
 ```
 
-**Edit a file directly in GitHub**
+## 🎯 Available Features
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Customer Features
+- ✅ Browse events by category
+- ✅ Event details with booking functionality
+- ✅ Shopping cart with persistence
+- ✅ User authentication and registration
+- ✅ Profile management
+- ✅ Checkout process (UI only)
+- ✅ Search and filtering
 
-**Use GitHub Codespaces**
+### Admin Features
+- ✅ Dashboard with statistics
+- ✅ Event management
+- ✅ Order management
+- ✅ User management
+- ✅ Reports and analytics
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 📱 Responsive Design
 
-## What technologies are used for this project?
+- Mobile-first approach
+- Tablet and desktop optimizations
+- Touch-friendly interfaces
+- Adaptive navigation
 
-This project is built with:
+## 🎨 UI Components
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+The project uses a curated set of shadcn/ui components:
+- Button, Card, Input, Label
+- Checkbox, Radio Group, Select
+- Tabs, Accordion, Alert
+- Toast, Tooltip, Badge
+- Calendar, Slider, Separator
+- And more...
 
-## How can I deploy this project?
+## 📊 Mock Data
 
-Simply open [Lovable](https://lovable.dev/projects/d14eb0d9-cb74-471f-953f-22e49687a0ad) and click on Share -> Publish.
+The application includes:
+- 15+ sample events with full details
+- 8 event categories
+- Mock user authentication
+- Cart persistence
+- Admin dashboard data
 
-## Can I connect a custom domain to my Lovable project?
+## 🚀 Available Scripts
 
-Yes, you can!
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## 🔧 Development
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+The application is designed to work completely standalone with mock data. All API calls have been replaced with mock implementations that simulate real backend behavior.
+
+## 📝 Notes
+
+- All data persists in localStorage
+- No backend server required
+- Ready for demonstration or further development
+- Easy to connect to a real backend when needed
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Submit a pull request
+
+## 📄 License
+
+This project is licensed under the MIT License.

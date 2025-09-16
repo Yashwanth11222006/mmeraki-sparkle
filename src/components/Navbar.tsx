@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, Heart, ShoppingCart, User, Menu, X, ChevronDown, HelpCircle, MapPin } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Search, Heart, ShoppingCart, User, Menu, X, ChevronDown, HelpCircle, MapPin, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -12,6 +13,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
+import logoImage from '@/assets/logo.png';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -22,34 +24,6 @@ const Navbar = () => {
 
   const cartItemCount = items.reduce((sum, item) => sum + item.quantity, 0);
 
-  const occasionCategories = [
-    { name: 'Anniversary', path: '/anniversary' },
-    { name: 'Birthdays', path: '/birthdays' },
-    { name: 'Gifts', path: '/gifts' },
-    { name: 'Candlelight Dinners', path: '/candlelight' },
-    { name: 'Decorations', path: '/decorations' },
-    { name: 'Festivals', path: '/festivals' },
-    { name: "Kid's Celebrations", path: '/kids' },
-    { name: 'Corporate Events', path: '/corporate' }
-  ];
-
-  const quickCategories = [
-    { name: 'Birthday Decorations', icon: '🎈', path: '/decorations?type=birthday' },
-    { name: 'Same Day Decorations', icon: '⚡', path: '/decorations?delivery=same-day' },
-    { name: 'Kids Birthday Decors', icon: '🎪', path: '/kids/birthday' },
-    { name: 'Corporate Events', icon: '💼', path: '/corporate' },
-    { name: 'Personalised Gifts', icon: '🎁', path: '/gifts/personalised' },
-    { name: 'Candlelight Dinner', icon: '🕯️', path: '/candlelight' },
-    { name: 'Baby Shower', icon: '👶', path: '/baby-shower' },
-    { name: 'Baby Welcome', icon: '🍼', path: '/baby-welcome' },
-    { name: 'Festive Celebrations', icon: '🎊', path: '/festivals' },
-    { name: 'Games & Activities', icon: '🎮', path: '/activities' }
-  ];
-
-  const quickLinks = [
-    'Anniversary', 'Birthday', 'Candlelight', 'Romantic Surprises', 'Proposals', 'Kids Parties'
-  ];
-
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
@@ -58,185 +32,218 @@ const Navbar = () => {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-border shadow-soft">
+    <>
       {/* Main Navigation */}
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-hero rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-lg">M</span>
-            </div>
-            <span className="text-2xl font-bold text-gradient">Mmeraki</span>
-          </Link>
+      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between h-16">
+            {/* Logo */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Link to="/" className="flex items-center space-x-3">
+                <img 
+                  src={logoImage} 
+                  alt="Mmeraki Logo" 
+                  className="h-10 w-auto object-contain"
+                />
+                <span className="text-2xl font-bold text-primary">Mmeraki</span>
+              </Link>
+            </motion.div>
 
-          {/* Search Bar - Desktop */}
-          <form onSubmit={handleSearch} className="hidden md:flex flex-1 max-w-md mx-8">
-            <div className="relative w-full">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-              <Input
-                placeholder="What are you celebrating?"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 bg-muted/50 border-0 focus:bg-white transition-colors rounded-full"
-              />
-            </div>
-          </form>
+            {/* Search Bar - Desktop */}
+            <motion.form 
+              onSubmit={handleSearch} 
+              className="hidden md:flex flex-1 max-w-md mx-8"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+            >
+              <div className="relative w-full">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                <Input
+                  placeholder="Search experiences, gifts, events..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-10 bg-gray-50 border-0 focus:bg-white focus:ring-2 focus:ring-primary/20 transition-all rounded-full h-10"
+                />
+              </div>
+            </motion.form>
 
-          {/* Right Side Icons */}
-          <div className="flex items-center space-x-6">
-            {/* Help Center */}
-            <Button variant="ghost" className="hidden md:flex items-center space-x-1 text-sm text-muted-foreground hover:text-primary">
-              <HelpCircle className="w-4 h-4" />
-              <span>HELP CENTER</span>
-            </Button>
-
-            {/* Login */}
-            {isAuthenticated ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="flex items-center space-x-1 text-sm text-muted-foreground hover:text-primary">
-                    <User className="w-4 h-4" />
-                    <span>LOG IN</span>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-48 bg-white border border-border shadow-medium" align="end">
-                  <DropdownMenuItem asChild>
-                    <Link to="/profile">My Account</Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link to="/profile">My Orders</Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link to="/profile">Wishlist</Link>
-                  </DropdownMenuItem>
-                  {user?.isAdmin && (
-                    <DropdownMenuItem asChild>
-                      <Link to="/admin">Admin Panel</Link>
-                    </DropdownMenuItem>
-                  )}
-                  <DropdownMenuItem onClick={logout}>
-                    Logout
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            ) : (
-              <Link to="/profile">
-                <Button variant="ghost" className="flex items-center space-x-1 text-sm text-muted-foreground hover:text-primary">
-                  <User className="w-4 h-4" />
-                  <span>LOG IN</span>
+            {/* Right Side Icons */}
+            <motion.div 
+              className="flex items-center space-x-4"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              {/* Help Center */}
+              <Link to="/help">
+                <Button variant="ghost" className="hidden md:flex items-center space-x-1 text-sm text-gray-600 hover:text-primary">
+                  <HelpCircle className="w-4 h-4" />
+                  <span>Help Center</span>
                 </Button>
               </Link>
-            )}
 
-            {/* Location */}
-            <Button variant="ghost" className="hidden md:flex items-center space-x-1 text-sm text-primary">
-              <MapPin className="w-4 h-4" />
-              <span>DELHI NCR</span>
-            </Button>
-
-            {/* Cart */}
-            <Link to="/cart">
-              <Button variant="ghost" size="icon" className="relative">
-                <ShoppingCart className="w-5 h-5" />
-                {cartItemCount > 0 && (
-                  <Badge className="absolute -top-2 -right-2 w-5 h-5 p-0 flex items-center justify-center text-xs bg-primary">
-                    {cartItemCount}
-                  </Badge>
-                )}
+              {/* Location */}
+              <Button variant="ghost" className="hidden md:flex items-center space-x-1 text-sm text-gray-600 hover:text-primary">
+                <MapPin className="w-4 h-4" />
+                <span>Delhi NCR</span>
+                <ChevronDown className="w-3 h-3" />
               </Button>
-            </Link>
 
-            {/* Mobile Menu Toggle */}
-            <Button
-              variant="ghost"
-              size="icon"
-              className="lg:hidden"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </Button>
+              {/* Login/User */}
+              {isAuthenticated ? (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" className="flex items-center space-x-1 text-sm text-gray-600 hover:text-primary">
+                      <User className="w-4 h-4" />
+                      <span>{user?.name}</span>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-48 bg-white border border-gray-200 shadow-lg" align="end">
+                    <DropdownMenuItem asChild>
+                      <Link to="/profile">My Account</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link to="/profile">My Orders</Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link to="/profile">Wishlist</Link>
+                    </DropdownMenuItem>
+                    {user?.isAdmin && (
+                      <DropdownMenuItem asChild>
+                        <Link to="/admin">Admin Panel</Link>
+                      </DropdownMenuItem>
+                    )}
+                    <DropdownMenuItem onClick={logout}>
+                      Logout
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <Link to="/login">
+                  <Button variant="ghost" className="flex items-center space-x-1 text-sm text-gray-600 hover:text-primary">
+                    <User className="w-4 h-4" />
+                    <span>Login</span>
+                  </Button>
+                </Link>
+              )}
+
+              {/* Cart */}
+              <Link to="/cart">
+                <Button variant="ghost" size="icon" className="relative">
+                  <ShoppingCart className="w-5 h-5" />
+                  {cartItemCount > 0 && (
+                    <Badge className="absolute -top-2 -right-2 w-5 h-5 p-0 flex items-center justify-center text-xs bg-primary text-white">
+                      {cartItemCount}
+                    </Badge>
+                  )}
+                </Button>
+              </Link>
+
+              {/* Mobile Menu Toggle */}
+              <Button
+                variant="ghost"
+                size="icon"
+                className="lg:hidden"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+              >
+                {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              </Button>
+            </motion.div>
           </div>
         </div>
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="lg:hidden py-4 border-t border-border">
+          <motion.div 
+            className="lg:hidden py-4 border-t border-gray-200 bg-white"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
+          >
             {/* Mobile Search */}
-            <form onSubmit={handleSearch} className="mb-4">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-                <Input
-                  placeholder="What are you celebrating?"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10"
-                />
-              </div>
-            </form>
+            <div className="px-4 mb-4">
+              <form onSubmit={handleSearch}>
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+                  <Input
+                    placeholder="Search experiences, gifts, events..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="pl-10 bg-gray-50 border-0 focus:bg-white focus:ring-2 focus:ring-primary/20 rounded-full h-10"
+                  />
+                </div>
+              </form>
+            </div>
 
             {/* Mobile Navigation */}
-            <nav className="space-y-2">
-              {occasionCategories.map((category) => (
-                <Link
-                  key={category.name}
-                  to={category.path}
-                  className="block py-2 text-foreground hover:text-primary transition-colors"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {category.name}
-                </Link>
-              ))}
-            </nav>
-          </div>
-        )}
-      </div>
-
-      {/* First Sub Navigation - Occasions */}
-      <div className="bg-white border-b border-border">
-        <div className="container mx-auto px-4">
-          <nav className="flex items-center justify-center space-x-8 py-3 text-sm">
-            {occasionCategories.map((category, index) => (
-              <React.Fragment key={category.name}>
-                <Link
-                  to={category.path}
-                  className={`hover:text-primary transition-colors ${
-                    index === occasionCategories.length - 1 ? 'text-primary font-medium' : 'text-foreground'
-                  }`}
-                >
-                  {category.name}
-                </Link>
-                {index < occasionCategories.length - 1 && (
-                  <ChevronDown className="w-3 h-3 text-muted-foreground" />
-                )}
-              </React.Fragment>
-            ))}
-          </nav>
-        </div>
-      </div>
-
-      {/* Second Sub Navigation - Event Categories */}
-      <div className="bg-muted/30 border-b border-border py-4">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-5 md:grid-cols-10 gap-4 max-w-6xl mx-auto">
-            {quickCategories.map((category) => (
+            <nav className="px-4 space-y-2">
               <Link
-                key={category.name}
-                to={category.path}
-                className="flex flex-col items-center p-3 rounded-lg hover:bg-white/50 transition-colors group"
+                to="/anniversary"
+                className="block py-2 text-gray-700 hover:text-primary transition-colors"
+                onClick={() => setIsMenuOpen(false)}
               >
-                <div className="w-12 h-12 bg-white rounded-lg flex items-center justify-center mb-2 shadow-sm group-hover:shadow-md transition-shadow border border-border/20">
-                  <span className="text-xl">{category.icon}</span>
-                </div>
-                <span className="text-xs text-center font-medium text-foreground leading-tight">
-                  {category.name}
-                </span>
+                Anniversary
               </Link>
-            ))}
-          </div>
-        </div>
-      </div>
-    </header>
+              <Link
+                to="/birthdays"
+                className="block py-2 text-gray-700 hover:text-primary transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Birthdays
+              </Link>
+              <Link
+                to="/gifts"
+                className="block py-2 text-gray-700 hover:text-primary transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Gifts
+              </Link>
+              <Link
+                to="/candlelight"
+                className="block py-2 text-gray-700 hover:text-primary transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Candlelight Dinners
+              </Link>
+              <Link
+                to="/decorations"
+                className="block py-2 text-gray-700 hover:text-primary transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Decorations
+              </Link>
+              <Link
+                to="/festivals"
+                className="block py-2 text-gray-700 hover:text-primary transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Festivals
+              </Link>
+              <Link
+                to="/kids"
+                className="block py-2 text-gray-700 hover:text-primary transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Kids Celebrations
+              </Link>
+              <Link
+                to="/corporate"
+                className="block py-2 text-gray-700 hover:text-primary transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Corporate Events
+              </Link>
+            </nav>
+          </motion.div>
+        )}
+      </header>
+    </>
   );
 };
 

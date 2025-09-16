@@ -8,16 +8,19 @@ import { AuthProvider } from "./context/AuthContext";
 
 // Customer Pages
 import Home from "./pages/Home";
-import Experiences from "./pages/Categories/Experiences";
-import Decorations from "./pages/Categories/Decorations";
-import Gifts from "./pages/Categories/Gifts";
-import Corporate from "./pages/Categories/Corporate";
+import OccasionPage from "./pages/OccasionPage";
+import EventDetails from "./pages/EventDetails";
 import EventDetail from "./pages/EventDetail";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import Profile from "./pages/Profile";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import HelpCenter from "./pages/HelpCenter";
+import Login from "./pages/Auth/Login";
+
+// Category Pages
+import BirthdayPage from "./pages/Categories/BirthdayPage";
 
 // Admin Pages
 import AdminLayout from "./admin/AdminLayout";
@@ -44,32 +47,27 @@ const App = () => (
               <Route path="/" element={<Home />} />
               
               {/* Main Categories */}
-              <Route path="/anniversary" element={<Experiences />} />
-              <Route path="/birthdays" element={<Experiences />} />
-              <Route path="/gifts" element={<Gifts />} />
-              <Route path="/candlelight" element={<Experiences />} />
-              <Route path="/decorations" element={<Decorations />} />
-              <Route path="/festivals" element={<Experiences />} />
-              <Route path="/kids" element={<Experiences />} />
-              <Route path="/corporate" element={<Corporate />} />
+              <Route path="/anniversary" element={<OccasionPage />} />
+              <Route path="/birthdays" element={<BirthdayPage />} />
+              <Route path="/birthdays/:subcategory" element={<BirthdayPage />} />
+              <Route path="/gifts" element={<OccasionPage />} />
+              <Route path="/candlelight" element={<OccasionPage />} />
+              <Route path="/decorations" element={<OccasionPage />} />
+              <Route path="/festivals" element={<OccasionPage />} />
+              <Route path="/kids" element={<OccasionPage />} />
+              <Route path="/corporate" element={<OccasionPage />} />
               
-              {/* Legacy routes */}
-              <Route path="/experiences" element={<Experiences />} />
-              
-              {/* Subcategory routes */}
-              <Route path="/decorations/:type" element={<Decorations />} />
-              <Route path="/gifts/:type" element={<Gifts />} />
-              <Route path="/kids/:type" element={<Experiences />} />
-              <Route path="/baby-shower" element={<Experiences />} />
-              <Route path="/baby-welcome" element={<Experiences />} />
-              <Route path="/activities" element={<Experiences />} />
-              
+              {/* Event Details */}
               <Route path="/event/:id" element={<EventDetail />} />
+              
+              {/* Other Pages */}
               <Route path="/cart" element={<Cart />} />
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/help" element={<HelpCenter />} />
+              <Route path="/login" element={<Login />} />
               
               {/* Admin Routes */}
               <Route path="/admin" element={<AdminLayout />}>

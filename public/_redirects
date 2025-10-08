@@ -1,0 +1,3 @@
+/api/* https://mmeraki-backend1.vercel.app/:splat 200!
+/* /index.html 200
+
